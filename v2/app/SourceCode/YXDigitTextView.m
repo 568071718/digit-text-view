@@ -4,6 +4,7 @@
 @interface YXDigitTextView () <UIKeyInput>
 
 @property (strong ,nonatomic) NSArray <YXDigitCell *>*cells;
+@property (assign ,nonatomic) NSInteger numberOfDigits;
 @end
 
 @implementation YXDigitTextView
@@ -24,9 +25,10 @@
     if (self) {
         _spacing = 0.0;
         _edgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+        _numberOfDigits = number;
         self.keyboardType = UIKeyboardTypeNumberPad;
         self.returnKeyType = UIReturnKeyDone;
-        [self createCellsWithCellClass:aClass count:number];
+        [self createCellsWithCellClass:aClass count:number text:nil];
     }
     return self;
 }
@@ -42,11 +44,26 @@
     _cells = nil;
 }
 
+- (NSInteger)numberOfDigits {
+    return _numberOfDigits;
+}
+
+- (void)reloadCellClass:(Class)aClass {
+    [_cells makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self createCellsWithCellClass:aClass count:_numberOfDigits text:self.text];
+    [self setNeedsLayout];
+}
+
 #pragma mark -
-- (void)createCellsWithCellClass:(Class)aClass count:(NSInteger)count {
+- (void)createCellsWithCellClass:(Class)aClass count:(NSInteger)count text:(NSString *)text {
     NSMutableArray *array = [NSMutableArray arrayWithCapacity:count];
     for (int i = 0; i < count; i ++) {
-        UIView *cell = [[aClass alloc] init];
+        YXDigitCell *cell = [[aClass alloc] init];
+        if (text.length > i) {
+            cell.text = [text substringWithRange:NSMakeRange(i, 1)];
+        } else {
+            cell.text = nil;
+        }
         [self addSubview:cell];
         [array addObject:cell];
     }
