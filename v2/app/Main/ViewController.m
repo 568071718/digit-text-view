@@ -27,6 +27,13 @@
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     NSLog(@"%s",__func__);
+    
+    for (YXDigitTextView *view in self.view.subviews) {
+        if ([view isKindOfClass:[YXDigitTextView class]]) {
+            [view reloadCellClass:[YXLabelDigitCell class]];
+            return;
+        }
+    }
 }
 
 #pragma mark -

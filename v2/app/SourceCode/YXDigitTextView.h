@@ -22,10 +22,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithNumberOfDigits:(NSUInteger)number;
 - (instancetype)initWithNumberOfDigits:(NSUInteger)number cellClass:(Class)aClass;
 
+- (NSInteger)numberOfDigits;
+
 @property (weak ,nonatomic) id <YXDigitTextViewDelegate>delegate;
 
 @property (assign ,nonatomic) CGFloat spacing;
 @property (assign ,nonatomic) UIEdgeInsets edgeInsets;
+
+- (void)reloadCellClass:(Class)aClass;
 
 - (NSString *)text;
 
