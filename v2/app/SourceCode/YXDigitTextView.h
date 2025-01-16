@@ -32,6 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)reloadCellClass:(Class)aClass;
 
 - (NSString *)text;
+- (void)setText:(nullable NSString *)text;
 
 #pragma mark -
 @property (nonatomic) UIKeyboardType keyboardType;
