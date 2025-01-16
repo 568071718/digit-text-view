@@ -191,4 +191,15 @@
     return [string copy];
 }
 
+- (void)setText:(NSString *)text {
+    for (int i = 0; i < _cells.count; i ++) {
+        YXDigitCell *cell = _cells[i];
+        if (text.length > i) {
+            cell.text = [text substringWithRange:NSMakeRange(i, 1)];
+        } else {
+            cell.text = nil;
+        }
+    }
+}
+
 @end
